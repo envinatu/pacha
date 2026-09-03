@@ -1,8 +1,10 @@
 ---
 title: "Getting Started with `pacha`"
-output:
-  rmarkdown::html_vignette:
-vignette: "%\\VignetteIndexEntry{Getting Started with pacha} %\\VignetteEncoding{UTF-8} %\\VignetteEngine{knitr::rmarkdown}\n"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting Started with `pacha`}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}
@@ -21,8 +23,8 @@ If you work with species checklists — writing a flora, a use-and-management ma
 This vignette follows the same order you'd naturally learn the package in: setting a source, resolving a name, pulling one piece of information at a time, then combining and validating that information, and finally assembling everything into the kind of Markdown block you'd actually put in a document.
 
 ```{r setup}
-#library(pacha)
-devtools::load_all("C:/Users/PC/My Drive/R Packages/pacha")
+library(pacha)
+# devtools::load_all("C:/Users/PC/My Drive/R Packages/pacha")
 ```
 
 ## Two flavors of every accessor
