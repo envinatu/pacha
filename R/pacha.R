@@ -136,24 +136,9 @@
   override <- .pacha_state$config$label_overrides[[language]][[key]]
   override <- .pacha_scalar(override)
   if (!is.na(override)) value <- override
-  if (isTRUE(required)) {
-    if (is.na(value)) {
-      stop(sprintf("No '%s' label is defined in the '%s' language dictionary.", key, language), call. = FALSE)
-    }
-    return(value)
+  if (is.na(value)) {
+    stop(sprintf("No '%s' label is defined in the '%s' language dictionary.", key, language), call. = FALSE)
   }
-  fallback <- c(
-    no_data = "No data available.",
-    connection_error = "Connection to the data source failed.",
-    common_names = "Common names",
-    sustainable_uses = "Sustainable uses",
-    indexed_in = "Indexed in",
-    origin = "Origin",
-    threat = "Conservation status",
-    unspecified_language = "unspecified language"
-  )
-  if (is.na(value)) value <- fallback[[key]]
-  if (is.null(value)) stop(sprintf("No label is defined for '%s'.", key), call. = FALSE)
   value
 }
 
