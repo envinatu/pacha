@@ -1,0 +1,35 @@
+#' Plain-text and Markdown accessors
+#'
+#' The package functions generally follow a dual-interface design:
+#' plain-text variants (`*_pacha()`) for interactive exploration, and Markdown
+#' variants (`*_pacha_md()`) for document rendering. Both share the same underlying
+#' source logic, differing only in formatting and error handling. Specific
+#' function availability is detailed in their respective documentation pages.
+#'
+#' @section Plain-text accessors (`*_pacha()`):
+#' Designed for interactive lookups and inline queries about a single taxon.
+#' They prioritize explicit feedback:
+#' \itemize{
+#'   \item Return a localized message when data is missing.
+#'   \item Raise an R \code{warning()} and return a connection message on network failure.
+#'   \item Warn when ColDP taxon resolution requires disambiguation.
+#'   \item Print output directly to the console via \code{cat()} (returning invisibly)
+#'         to preserve multi-line formatting (except \code{indexation_urls_pacha()}).
+#' }
+#'
+#' @section Markdown accessors (`*_pacha_md()`):
+#' Designed for assembling multi-component or multi-taxon Markdown reports.
+#' They prioritize clean document compilation:
+#' \itemize{
+#'   \item Suppress all R \code{warning()}s, including connection and disambiguation issues.
+#'   \item Return an empty string (\code{""}) invisibly when data is unavailable,
+#'         preventing broken layouts or redundant headers in the compiled document.
+#' }
+#'
+#' @section Choosing between them:
+#' Use `*_pacha()` when inspecting an individual taxon interactively.
+#' Use `*_pacha_md()` when generating dynamic reports (e.g., Quarto or R Markdown),
+#' where unavailable data should omit silently rather than disrupt document rendering.
+#'
+#' @name accessors-pacha
+NULL

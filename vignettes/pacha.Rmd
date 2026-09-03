@@ -1,0 +1,196 @@
+---
+title: "Getting Started with `pacha`"
+output:
+  rmarkdown::html_vignette:
+vignette: "%\\VignetteIndexEntry{Getting Started with pacha} %\\VignetteEncoding{UTF-8} %\\VignetteEngine{knitr::rmarkdown}\n"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## What pacha does?
+
+`pacha` is a small interface to ChecklistBank taxonomic and ethnobotanical data. Out of the box it talks to the *Listado de plantas de uso y aprovechamiento sostenible en Ecuador* checklist (ChecklistBank dataset `"313479"`, `doi:10.48580/dgvrn`), but nothing in the package is tied to that particular dataset. Every function is source-agnostic: point it at any other ChecklistBank-compatible dataset, or at a local Catalogue of Life Data Package (ColDP) archive, and the same functions keep working, as long as the source exposes name usages and, where relevant, vernacular names, taxon properties and distributions.
+
+If you work with species checklists — writing a flora, a use-and-management manual, a technical report, or a book built with Quarto — `pacha` is meant to save you the repetitive part: looking up a name, pulling its common names and documented uses, and turning that into readable text without retyping it for every species.
+
+This vignette follows the same order you'd naturally learn the package in: setting a source, resolving a name, pulling one piece of information at a time, then combining and validating that information, and finally assembling everything into the kind of Markdown block you'd actually put in a document.
+
+```{r setup}
+#library(pacha)
+devtools::load_all("C:/Users/PC/My Drive/R Packages/pacha")
+```
+
+## Two flavors of every accessor
+
+Almost every data-retrieval function comes in two versions that share the same underlying logic but behave differently on the edges:
+
+- **Plain-text accessors** (`*_pacha()`), meant for interactive, one-off lookups in the console. If something is missing, you get a readable message instead of an error; if the connection fails, you get a `warning()` you can see and react to.
+- **Markdown accessors** (`*_pacha_md()`), meant to be embedded in a document — an R Markdown or Quarto chunk with `results = "asis"`. These stay quiet: no warnings, and when there is nothing to report they return `""` invisibly, so a species with a thin record doesn't leave a stray heading or an empty bullet in your rendered document.
+
+Keep this pair in mind as you read on: almost every function below exists in both flavors, and we'll come back to the Markdown side once we get to `pacha_report()`.
+
+## Configuring a source
+
+Before looking anything up, `pacha` needs to know where to look. `pacha_configure()` reads or updates the configuration every accessor shares. Called with no arguments, it just shows you what's active:
+
+```{r}
+pacha_configure()
+```
+
+By default that's the ChecklistBank web API against dataset `"313479"`. To work against a different ChecklistBank dataset, change `dataset` (and `language`, if you want labels translated):
+
+```{r}
+pacha_configure(source = "api", dataset = "313479", language = "es")
+```
+
+`pacha` can also read data from a local ColDP archive instead of the web API — useful if you're offline, iterating on a checklist that hasn't been published yet, or simply want faster, more predictable lookups while writing. That mode is configured through `coldp_zip_file` and `coldp_country`; this vignette sticks to the web API throughout, since it doesn't require you to have a local archive on hand to follow along.
+
+Whatever the default, any individual call can override it with its own `source` argument, without touching the global configuration — handy when you just want to check one species against a different dataset. We'll use that repeatedly from here on.
+
+## Resolving a name
+
+The simplest possible question you can ask `pacha` is: what is the correct, fully resolved scientific name for this species? `pacha_sc_full_name()` answers exactly that, and nothing else — no common names, no uses, just the name itself, with authorship attached when it's available:
+
+```{r}
+species <- "Bidens andicola"
+pacha_sc_full_name(species)
+```
+
+Everything else in the package builds on being able to resolve a name this way, so it's worth starting here.
+
+## Pulling one piece of information at a time
+
+Once a name resolves, the next layer of functions each retrieve a single piece of information about it. They all share the same shape: a `species` argument, an optional `language` to translate categories and labels through the configured dictionary, an optional `source` override, and a `refresh` argument to skip the in-memory cache and fetch the record again.
+
+```{r}
+# Common / vernacular names, grouped by language
+common_names_pacha(species)
+
+# Establishment status: native, introduced, cultivated, naturalized...
+establishment_pacha(species, language = "en")
+
+# Conservation status, typically an IUCN-style category
+threat_status_pacha(species, refresh = TRUE)
+
+# Related URLs: the source record, the canonical taxon page, IPNI, etc.
+indexation_urls_pacha(species)
+```
+
+`sustainable_uses_pacha()` works the same way, with one extra argument: `use`, to filter by category name or a fragment of it, when you don't want every documented use back:
+
+```{r}
+sustainable_uses_pacha(species)
+sustainable_uses_pacha(species, use = "medicinal")
+```
+
+## Asking a yes-or-no question
+
+Sometimes what you actually want isn't a specific field but a simple answer: is this species even in the checklist? `is_listed_pacha()` sits a level above the functions before it — internally it resolves the name and checks the record, then reports a single localized statement. With `detailed = TRUE`, it also appends the sustainable-use records when the species is listed, which is the first place in this vignette where one function's output depends on another's:
+
+```{r}
+is_listed_pacha(species)
+is_listed_pacha(species, detailed = TRUE)
+```
+
+## Citing the dataset, not the species
+
+`reference_pacha()` is a small detour from the species-level functions: it gives you the citation for the *dataset itself*, resolved once from the configured ChecklistBank dataset (or the local archive's `metadata.yaml`) and cached, since it doesn't vary by species. It comes back as clean plain text even when the source hands it over as CSL HTML with embedded markup:
+
+```{r}
+reference_pacha()
+```
+
+This is worth putting somewhere visible in a book or report — an acknowledgments section, a data-sources appendix — since it's the proper citation for the underlying checklist, distinct from citing `pacha` as software.
+
+## Clearing the cache
+
+Every accessor keeps its records in memory for the rest of the session, to avoid repeating network calls or archive reads. Most of the time that's exactly what you want, but if the underlying dataset has changed since you started working, `pacha_clear_cache()` clears it:
+
+```{r}
+# Just one species, from both sources
+pacha_clear_cache("Bidens andicola")
+
+# Everything, including the cached local ColDP tables
+pacha_clear_cache()
+```
+
+## Cross-checking two sources
+
+If you maintain both a ChecklistBank dataset and a local ColDP archive — for instance, while preparing a new release of the archive from an updated checklist — `compare_pacha()` queries both sources for one species and tells you whether they agree, independently of whichever source is currently configured as the default. This is more involved than anything above: it resolves the name against both sources, normalizes case, accents, punctuation and whitespace before judging agreement, and returns a component-by-component verdict rather than a single value. It needs a ColDP archive configured through `pacha_configure(coldp_zip_file = ...)` to have something to compare against, so it isn't demonstrated with runnable code here.
+
+Each component ends up classified as `"identical"`, `"partial_overlap"`, `"discrepant"`, `"one_source_missing"`, `"both_missing"`, `"api_unavailable"`, or `"coldp_unavailable"` — and with sustainable uses specifically, a value that moved from one category to another counts as a discrepancy rather than being silently overlooked.
+
+## Plugging in a custom source
+
+For the API-backed path specifically, `pacha_configure()` accepts a custom `fetcher` — this is the most advanced piece of configuration in the package, since it means replacing part of `pacha`'s own machinery. A fetcher receives `(species, config)` and has to return a list shaped the same way the built-in adapter does — `common_names`, `sustainable_uses`, `indexation_urls`, `establishment`, `threat_status`, `transport_error` and `transport_messages`:
+
+```{r eval=FALSE}
+my_fetcher <- function(species, config) {
+  list(
+    common_names = list(es = c("nombre comun")),
+    sustainable_uses = list(Medicinal = c("uso medicinal registrado")),
+    indexation_urls = c(source = "https://example.org/taxon/123"),
+    establishment = "native",
+    threat_status = "LC",
+    transport_error = FALSE,
+    transport_messages = character()
+  )
+}
+
+pacha_configure(fetcher = my_fetcher)
+
+```
+
+A custom fetcher only kicks in when `source = "api"`; `source = "coldp"` always reads the configured archive directly, bypassing the fetcher entirely. Most users will never need this — it's here for the case where you want `pacha`'s reporting and caching behavior in front of a dataset that ChecklistBank doesn't serve.
+
+## From lookups to documents: the Markdown accessors
+
+Everything so far has been about pulling one fact at a time, either at the console or, at most, feeding one function's result into another. Writing a document is a different kind of task: you want several pieces of information about a species, formatted consistently, dropped straight into a chunk with `results = "asis"` so Quarto or R Markdown renders it as Markdown instead of printing it as text.
+
+That's what the `_md` accessors are for. They mirror the plain-text functions one for one — `common_names_pacha_md()`, `sustainable_uses_pacha_md()`, `establishment_pacha_md()`, and so on — but stay silent instead of warning, and return `""` invisibly instead of a "no data" message. You could call several of them in sequence for one species, but there's a function that already does that for you.
+
+## Putting it all together with pacha_report()
+
+`pacha_report()` is where everything above converges. For one or more species, it combines the scientific-name heading, common names, and sustainable uses — using the same `_md` accessors described above — into a single Markdown block, ready to drop into a chapter:
+
+```{r, eval = FALSE}
+#| results: asis
+pacha_report(c("Bidens andicola", "Bomarea multiflora"), language = "en")
+```
+
+Because each underlying `_md` function quietly returns `""` when a component has no data, a species with a thin record doesn't leave a "no data" placeholder or a heading with nothing under it — the block for that species is simply shorter. `pacha_report()` forwards `language`, `source`, `use` and `refresh` to `common_names_pacha_md()` and `sustainable_uses_pacha_md()`; the heading itself always comes from `pacha_sc_full_name_md()`, which resolves independently against ChecklistBank's Catalogue of Life dataset and isn't affected by those arguments.
+
+This scales naturally to something like a printed flora or a Quarto book with one chapter per taxonomic family, where each species gets its own short entry. This is roughly what that looks like in a `.qmd` chapter — an unnumbered family heading, followed by a chunk that renders one report per species, with the code itself hidden from the reader:
+
+---
+
+# Amaranthaceae {-}
+
+```{r}
+#| label: Amaranthaceae
+#| results: asis
+#| echo: false
+pacha_report(c(
+  "Alternanthera porrigens", # bledo
+  "Amaranthus asplundii",    # colada morada
+  "Amaranthus hybridus",     # planta calle Lata
+  "Guilleminea densa"
+))
+```
+
+---
+
+A few things worth calling out about this pattern:
+
+- **`echo: false`** hides the R code from the rendered book — readers see the species entries, not the call that produced them.
+- **`results: asis`** tells Quarto to treat `pacha_report()`'s output as Markdown to be rendered, not as text to be printed inside a code block. Without it you'd get the raw Markdown source on the page instead of headings and formatted text.
+- **`pacha_report()` accepts a vector**, so a family with several species doesn't need one call per species — a single call with all the names produces one continuous block, in order, separated by a blank line between species. That also means a failure partway through (an invalid name, for instance) stops the whole call, so it's worth keeping a quick `is_listed_pacha()` check nearby while you're still curating the list of names for a chapter.
+- Comments after each name (`# bledo`, `# colada morada`...) are just your own working notes — `pacha` never sees them. They're a convenient way to keep track of which vernacular name or field observation motivated including a species, without cluttering the rendered output.
+- Because this chunk only depends on `pacha_report()`'s Markdown output, it renders the same way regardless of the book's output format — the same chapter source produces consistent species entries whether Quarto is building HTML, LaTeX, Typst, EPUB or a Word document.
+
+If you're assembling a book this way, it's usually worth keeping one `.qmd` file per family (or per chapter, however you're splitting things), with a chunk like the one above at the top and any narrative text around it, and running `pacha_clear_cache()` once at the start of a full re-render, so every chapter picks up the latest data instead of whatever was cached from an earlier, partial render.

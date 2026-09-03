@@ -1,0 +1,232 @@
+# -----------------------------------------------------------------------------
+# sacha spatial module -- language file
+# -----------------------------------------------------------------------------
+# The file name (without extension) is this language's canonical code, i.e.
+# "en" for `language = "en"`. `aliases:` lists extra strings a user may pass
+# to `language = ` besides the code itself (which is always accepted).
+#
+# To add another language: copy this file to inst/<code>.yml (e.g. inst/fr.yml
+# for French), translate every value under `labels:` -- keeping exactly the
+# same keys -- and optionally list its aliases. No change to the .R source is
+# needed.
+# -----------------------------------------------------------------------------
+
+aliases:
+  - "english"
+  - "inglés"
+  - "ingles"
+
+labels_geo:
+  no_data: "No data available"
+  no_occurrences: "No GBIF occurrences with valid coordinates were found for"
+  no_locations: "No documented geographic distribution records were found in Catalogue of Life for"
+  locations_suffix: "has been recorded in the following geographic areas"
+  map_legend: "GBIF occurrences"
+  popup_year: "Year"
+  popup_locality: "Locality"
+  unavailable: "Not available"
+  map_caption: "Distribution of %s, recorded in GBIF, accessed on %s"
+  map_short_caption: "Distribution of %s"
+  map_caption_crop: "Distribution of %s, in %s, recorded in GBIF, accessed on %s"
+  map_short_caption_crop: "Distribution of %s, in %s"
+  communication_error: "Could not retrieve the geographic distribution of"    # en.yml
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# =============================================================================
+# SACHA — LANGUAGE FILE: English (en)
+# =============================================================================
+#
+# This file contains ALL translations sacha uses for the "en" language.
+# R/sacha.R contains no English text of its own: it reads it from here at
+# runtime.
+#
+# To add a new language:
+#   1. Copy this file as inst/lang/<code>.yml (e.g. fr.yml).
+#   2. Change `language:` to the new code and `aliases:` to the words users
+#      will be able to type to select it.
+#   3. Translate the VALUES (never the keys) of labels, ranks,
+#      establishment, and threat.
+#   4. Save the file. There is no need to touch the .R file: sacha
+#      automatically discovers every *.yml file present in inst/lang/.
+#
+# To add more aliases or fix an English translation, edit the values in this
+# file directly.
+
+# Canonical language code. Must match this file's name (en.yml -> "en").
+#language: en
+
+# Words the user may pass to sacha_configure(language = ...) or
+# sacha_set_language() to select this language. "en" itself does not need to
+# be listed: it is always added automatically from the file name.
+#aliases:
+#  - en
+#  - english
+#  - inglés
+#  - ingles
+
+# ---------------------------------------------------------------------------
+# Fixed labels used by the *_md() functions and as the "no data" message.
+# ---------------------------------------------------------------------------
+labels_data:
+  first_published: "First published in"
+  origin: "Establishment status"
+  threat: "Conservation status"
+  common_names: "Common names"
+  common_names_yura: "Common names used in Ecuador"
+  sustainable_uses: "Sustainable use and harvesting"
+  indexed_in: "Sites where the species is indexed"
+  no_data: "No data available"
+  unspecified_language: "language not specified"
+  connection_error: "connection error: could not retrieve data from the source"
+  is_listed_pacha_true: "is found in the dataset"
+  is_listed_pacha_false: "is not found in the dataset"
+
+# ---------------------------------------------------------------------------
+# Taxonomic rank names used by taxonomy() and taxonomy_md().
+# ---------------------------------------------------------------------------
+ranks:
+  superdomain: "Superdomain"
+  domain: "Domain"
+  subdomain: "Subdomain"
+  superkingdom: "Superkingdom"
+  kingdom: "Kingdom"
+  subkingdom: "Subkingdom"
+  infrakingdom: "Infrakingdom"
+  superphylum: "Superphylum"
+  phylum: "Phylum"
+  subphylum: "Subphylum"
+  infraphylum: "Infraphylum"
+  superclass: "Superclass"
+  class: "Class"
+  subclass: "Subclass"
+  infraclass: "Infraclass"
+  superorder: "Superorder"
+  order: "Order"
+  suborder: "Suborder"
+  infraorder: "Infraorder"
+  superfamily: "Superfamily"
+  family: "Family"
+  subfamily: "Subfamily"
+  supertribe: "Supertribe"
+  tribe: "Tribe"
+  subtribe: "Subtribe"
+  genus: "Genus"
+  subgenus: "Subgenus"
+  section: "Section"
+  subsection: "Subsection"
+  series: "Series"
+  species: "Species"
+  subspecies: "Subspecies"
+  variety: "Variety"
+  subvariety: "Subvariety"
+  form: "Form"
+  subform: "Subform"
+
+# ---------------------------------------------------------------------------
+# Controlled vocabulary for establishment status (establishment()).
+# Keys are the lowercase English values returned by ChecklistBank; values are
+# the translation shown to the user.
+# ---------------------------------------------------------------------------
+establishment:
+  native: "Native"
+  introduced: "Introduced"
+  naturalised: "Naturalised"
+  naturalized: "Naturalized"
+  invasive: "Invasive"
+  cultivated: "Cultivated"
+  uncertain: "Uncertain"
+  unknown: "Unknown"
+
+# ---------------------------------------------------------------------------
+# Controlled vocabulary for conservation status (threat_status()).
+# ---------------------------------------------------------------------------
+threat:
+  "least concern": "Least Concern (LC)"
+  "near threatened": "Near Threatened (NT)"
+  "vulnerable": "Vulnerable (VU)"
+  "endangered": "Endangered (EN)"
+  "critically endangered": "Critically Endangered (CR)"
+  "extinct in the wild": "Extinct in the Wild (EW)"
+  "extinct": "Extinct (EX)"
+  "data deficient": "Data Deficient (DD)"
+  "not evaluated": "Not Evaluated (NE)"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# =============================================================================
+# Language file: English (en)
+#
+# Used by .inat_text() in R/inat_images.R. Every key must exist in ALL of
+# the package's language files (one per language, in this same directory:
+# es.yml, en.yml, ...). To add a new language, copy this file, translate
+# the values, and save it as "<language_code>.yml" (e.g. "fr.yml") -- no
+# .R file needs to change.
+# =============================================================================
+
+no_observations: "No observations matching the requested criteria were found."
+no_local_images: "No sufficient local images and metadata were found for the requested query."
+no_photos: "Observation %s does not contain usable photographs."
+local_source: "Local images and metadata"
+web_source: "iNaturalist web data and images"
+observed: "observed in"
+by: "by"
+licence: "Licence"
+record: "Photographic record of"
+records: "Photographic records of"
+unknown_place: "Ecuador"
+unknown_observer: "unidentified observer"
+download_failed: "The image from observation %s could not be downloaded."
+col_failed: "Catalogue of Life taxonomic authorship could not be retrieved for '%s'."
+local_insufficient: "Local images do not cover all requested observations."
+# en.yml
+all_rights_reserved: "All rights reserved"
+public_domain_label: "Public Domain"
+license_unmapped: "Unrecognized license code: '%s'. Please check the license table."
+unknown_family: "Unknown_Family"
+
+
+
+
+
+
+
+
+
+
+
+sites:
+     ipni: "IPNI"

@@ -1,0 +1,231 @@
+# -----------------------------------------------------------------------------
+# sacha spatial module -- language file
+# -----------------------------------------------------------------------------
+# The file name (without extension) is this language's canonical code, i.e.
+# "es" for `language = "es"`. `aliases:` lists extra strings a user may pass
+# to `language = ` besides the code itself (which is always accepted).
+#
+# To add another language: copy this file to inst/<code>.yml (e.g. inst/fr.yml
+# for French), translate every value under `labels:` -- keeping exactly the
+# same keys -- and optionally list its aliases. No change to the .R source is
+# needed.
+# -----------------------------------------------------------------------------
+
+aliases:
+  - "spanish"
+  - "español"
+  - "espanol"
+
+labels_geo:
+  no_data: "Sin datos disponibles"
+  no_occurrences: "No se encontraron ocurrencias de GBIF con coordenadas válidas para"
+  no_locations: "No se encontraron registros de distribución geográfica documentados en Catalogue of Life para"
+  locations_suffix: "ha sido registrada en las siguientes áreas geográficas"
+  map_legend: "Ocurrencias de GBIF"
+  popup_year: "Año"
+  popup_locality: "Localidad"
+  unavailable: "No disponible"
+  map_caption: "Distribución de %s, registrada en GBIF, consultado el %s"
+  map_short_caption: "Distribución de %s"
+  map_caption_crop: "Distribución de %s, en %s, registrada en GBIF, consultado el %s"
+  map_short_caption_crop: "Distribución de %s, en %s"
+  communication_error: "No se pudo consultar la distribución geográfica de"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# =============================================================================
+# SACHA — ARCHIVO DE IDIOMA: Español (es)
+# =============================================================================
+#
+# Este archivo contiene TODAS las traducciones que sacha usa para el idioma
+# "es". El código en R/sacha.R no contiene ningún texto en español: lo lee
+# desde aquí en tiempo de ejecución.
+#
+# Para añadir un nuevo idioma:
+#   1. Copie este archivo como inst/lang/<codigo>.yml (por ejemplo fr.yml).
+#   2. Cambie `language:` al nuevo código y `aliases:` a las palabras que los
+#      usuarios podrán escribir para seleccionarlo.
+#   3. Traduzca los valores (nunca las claves) de labels, ranks,
+#      establishment y threat.
+#   4. Guarde el archivo. No es necesario tocar el archivo .R: sacha detecta
+#      automáticamente cualquier archivo *.yml presente en inst/lang/.
+#
+# Para agregar más alias o corregir una traducción del español, edite
+# directamente los valores de este archivo.
+
+# Código canónico del idioma. Debe coincidir con el nombre de este archivo
+# (es.yml -> "es").
+#language: es
+
+# Palabras que el usuario puede pasar a sacha_configure(language = ...) o a
+# sacha_set_language() para seleccionar este idioma. No hace falta incluir
+# "es": siempre se añade automáticamente a partir del nombre del archivo.
+#aliases:
+#  - es
+#  - spanish
+ # - español
+ # - espanol
+
+# ---------------------------------------------------------------------------
+# Etiquetas fijas usadas en las funciones *_md() y como mensaje "sin datos".
+# ---------------------------------------------------------------------------
+labels_data:
+  first_published: "Publicado por primera vez en"
+  origin: "Origen"
+  threat: "Estado de conservación"
+  common_names: "Nombres comunes"
+  common_names_yura: "Planta comunmente conocida como"
+  sustainable_uses: "Susceptibilidad de uso y aprovechamiento sostenible"
+  indexed_in: "Sitios donde se encuentra indexada la especie"
+  no_data: "Sin datos disponibles"
+  unspecified_language: "lengua no especificada"
+  connection_error: "error de conexión: no fue posible obtener los datos de la fuente"
+  is_listed_pacha_true: "se encuentra en el dataset"
+  is_listed_pacha_false: "no se encuentra en el dataset"
+
+# ---------------------------------------------------------------------------
+# Nombres de los rangos taxonómicos usados por taxonomy() y taxonomy_md().
+# ---------------------------------------------------------------------------
+ranks:
+  superdomain: "Superdominio"
+  domain: "Dominio"
+  subdomain: "Subdominio"
+  superkingdom: "Superreino"
+  kingdom: "Reino"
+  subkingdom: "Subreino"
+  infrakingdom: "Infrareino"
+  superphylum: "Superfilo"
+  phylum: "Filo"
+  subphylum: "Subfilo"
+  infraphylum: "Infrafilo"
+  superclass: "Superclase"
+  class: "Clase"
+  subclass: "Subclase"
+  infraclass: "Infraclase"
+  superorder: "Superorden"
+  order: "Orden"
+  suborder: "Suborden"
+  infraorder: "Infraorden"
+  superfamily: "Superfamilia"
+  family: "Familia"
+  subfamily: "Subfamilia"
+  supertribe: "Supertribu"
+  tribe: "Tribu"
+  subtribe: "Subtribu"
+  genus: "Género"
+  subgenus: "Subgénero"
+  section: "Sección"
+  subsection: "Subsección"
+  series: "Serie"
+  species: "Especie"
+  subspecies: "Subespecie"
+  variety: "Variedad"
+  subvariety: "Subvariedad"
+  form: "Forma"
+  subform: "Subforma"
+
+# ---------------------------------------------------------------------------
+# Vocabulario controlado de estado de establecimiento (establishment()).
+# Las claves son los valores en inglés que devuelve ChecklistBank en
+# minúsculas; los valores son la traducción mostrada al usuario.
+# ---------------------------------------------------------------------------
+establishment:
+  native: "Nativo"
+  introduced: "Introducido"
+  naturalised: "Naturalizado"
+  naturalized: "Naturalizado"
+  invasive: "Invasor"
+  cultivated: "Cultivado"
+  uncertain: "Incierto"
+  unknown: "Desconocido"
+
+# ---------------------------------------------------------------------------
+# Vocabulario controlado de estado de conservación (threat_status()).
+# ---------------------------------------------------------------------------
+threat:
+  "least concern": "Preocupación menor (LC)"
+  "near threatened": "Casi amenazada (NT)"
+  "vulnerable": "Vulnerable (VU)"
+  "endangered": "En peligro (EN)"
+  "critically endangered": "En peligro crítico (CR)"
+  "extinct in the wild": "Extinta en estado silvestre (EW)"
+  "extinct": "Extinta (EX)"
+  "data deficient": "Datos insuficientes (DD)"
+  "not evaluated": "No evaluada (NE)"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# =============================================================================
+# Archivo de idioma: Español (es)
+#
+# Usado por .inat_text() en R/inat_images.R. Cada clave debe existir en
+# TODOS los archivos de idioma del paquete (uno por idioma, en este mismo
+# directorio: es.yml, en.yml, ...). Para añadir un idioma nuevo basta con
+# copiar este archivo, traducir los valores y guardarlo como
+# "<codigo_idioma>.yml" (por ejemplo "fr.yml") -- no es necesario modificar
+# ningún archivo .R.
+# =============================================================================
+
+no_observations: "No se encontraron observaciones que cumplan los criterios de consulta."
+no_local_images: "No se encontraron imágenes locales y metadatos suficientes para la consulta solicitada."
+no_photos: "La observación %s no contiene fotografías utilizables."
+local_source: "Metadatos e imágenes locales"
+web_source: "Datos e imágenes web de iNaturalist"
+observed: "observada en"
+by: "por"
+licence: "Licencia"
+record: "Registro fotográfico de"
+records: "Registros fotográficos de"
+unknown_place: "Ecuador"
+unknown_observer: "persona observadora no identificada"
+download_failed: "No fue posible descargar la imagen de la observación %s."
+col_failed: "No fue posible recuperar la autoría taxonómica de Catalogue of Life para '%s'."
+local_insufficient: "Las imágenes locales no cubren todas las observaciones solicitadas."
+# es.yml
+all_rights_reserved: "Todos los derechos reservados"
+public_domain_label: "Dominio público"
+license_unmapped: "Código de licencia no reconocido: '%s'. Verifique la tabla de licencias."
+unknown_family: "Familia_Desconocida"
+
+
+
+
+
+sites:
+     ipni: "IPNI"
