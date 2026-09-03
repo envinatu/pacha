@@ -89,7 +89,7 @@ labels_data:
   origin: "Establishment status"
   threat: "Conservation status"
   common_names: "Common names"
-  common_names_yura: "Common names used in Ecuador"
+  common_names_pacha: "Common names used in Ecuador"
   sustainable_uses: "Sustainable use and harvesting"
   indexed_in: "Sites where the species is indexed"
   no_data: "No data available"

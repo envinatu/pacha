@@ -91,7 +91,7 @@ labels_data:
   origin: "Origen"
   threat: "Estado de conservación"
   common_names: "Nombres comunes"
-  common_names_yura: "Planta comunmente conocida como"
+  common_names_pacha: "Planta comunmente conocida como"
   sustainable_uses: "Susceptibilidad de uso y aprovechamiento sostenible"
   indexed_in: "Sitios donde se encuentra indexada la especie"
   no_data: "Sin datos disponibles"
