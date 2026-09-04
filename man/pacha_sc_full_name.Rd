@@ -47,8 +47,8 @@ is only reached for a structurally invalid \code{species}.
 \section{Functions}{
 \itemize{
 \item \code{pacha_sc_full_name_md()}: Same resolution, rendered as a
-level-one Markdown heading with the name italicised and the
-authorship appended as plain text (e.g. \code{"# *Bidens andicola*
+Markdown heading with the name italicised and the
+authorship appended as plain text (e.g. \code{"## *Bidens andicola*
 Kunth"}). Markdown-sensitive characters in both parts are
 backslash-escaped to keep the output well-formed. Printed via
 \code{cat()} and returned invisibly.
