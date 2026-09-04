@@ -167,8 +167,8 @@ pacha_sc_full_name <- function(species) {
 }
 
 #' @describeIn pacha_sc_full_name Same resolution, rendered as a
-#'   level-one Markdown heading with the name italicised and the
-#'   authorship appended as plain text (e.g. \code{"# *Bidens andicola*
+#'   Markdown heading with the name italicised and the
+#'   authorship appended as plain text (e.g. \code{"## *Bidens andicola*
 #'   Kunth"}). Markdown-sensitive characters in both parts are
 #'   backslash-escaped to keep the output well-formed. Printed via
 #'   \code{cat()} and returned invisibly.
@@ -176,7 +176,7 @@ pacha_sc_full_name <- function(species) {
 pacha_sc_full_name_md <- function(species) {
   record <- .pacha_fn_record(species)
   markdown <- paste0(
-    "# *", .pacha_fn_markdown_escape_text(record$scientific_name), "*",
+    "## *", .pacha_fn_markdown_escape_text(record$scientific_name), "*",
     if (!is.na(record$authorship)) paste0(" ", .pacha_fn_markdown_escape_text(record$authorship)) else ""
   )
   .pacha_emit_md(markdown)
