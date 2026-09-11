@@ -1,5 +1,5 @@
 Package: pacha
-Title: A Flexible Interface to ChecklistBank Taxonomic and Ethnobotanical Data
+Title: A Flexible Toolkit for ChecklistBank Taxonomic and Ethnobotanical Data
 Version: 0.1.0
 Authors@R: person("Marcelo F.", "Amores-Palma", role = c("aut", "cre", "cph"),
     email = "contacto.envinatu@gmail.com",

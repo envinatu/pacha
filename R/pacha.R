@@ -1282,6 +1282,7 @@ is_listed_pacha <- function(species, language = NULL, source = NULL, refresh = F
   .pacha_emit_plain(result)
 }
 
+
 .pacha_api_dataset_citation <- function(dataset, refresh = FALSE) {
   cache <- .pacha_state$api_cache
   key <- paste0(".dataset_citation:", dataset)
@@ -1317,7 +1318,45 @@ is_listed_pacha <- function(species, language = NULL, source = NULL, refresh = F
   }
   metadata <- .pacha_coldp_metadata(zip_file)
   if (is.null(metadata)) return(NA_character_)
-  .pacha_scalar(metadata$citation)
+  direct <- .pacha_scalar(metadata$citation)
+  if (!is.na(direct) && nzchar(direct)) return(direct)
+  title <- .pacha_scalar(metadata$title)
+  version <- .pacha_scalar(metadata$version)
+  doi <- .pacha_scalar(metadata$doi)
+  issued <- .pacha_scalar(metadata$issued)
+  year <- if (!is.na(issued) && nzchar(issued)) {
+    sub("-.*", "", issued)
+  } else if (!is.na(version) && nzchar(version)) {
+    sub("-.*", "", version)
+  } else {
+    NA_character_
+  }
+  creators <- metadata$creator
+  authors <- if (is.list(creators)) {
+    vapply(creators, function(entry) {
+      org <- .pacha_scalar(entry$organisation)
+      if (!is.na(org) && nzchar(org)) return(org)
+      family <- .pacha_scalar(entry$family)
+      given <- .pacha_scalar(entry$given)
+      name <- trimws(paste(family, given))
+      if (nzchar(name)) name else NA_character_
+    }, character(1))
+  } else {
+    character(0)
+  }
+  authors <- authors[!is.na(authors) & nzchar(authors)]
+  author_str <- if (length(authors)) paste(authors, collapse = "; ") else NA_character_
+  if (is.na(title) || !nzchar(title) || is.na(author_str) || is.na(year) || !nzchar(year)) {
+    return(NA_character_)
+  }
+  citation <- sprintf("%s. (%s). %s", author_str, year, title)
+  if (!is.na(version) && nzchar(version)) citation <- sprintf("%s (Version %s)", citation, version)
+  if (!is.na(doi) && nzchar(doi)) {
+    citation <- sprintf("%s. https://doi.org/%s", citation, doi)
+  } else {
+    citation <- paste0(citation, ".")
+  }
+  citation
 }
 
 .pacha_dataset_citation <- function(source = NULL, refresh = FALSE) {
@@ -1388,6 +1427,7 @@ reference_pacha <- function(species = NULL, language = NULL, source = NULL, refr
   }
   .pacha_html_to_plain(record$citation)
 }
+
 
 .pacha_compare_components <- c("common_names", "sustainable_uses", "indexation_urls", "establishment", "threat_status")
 
