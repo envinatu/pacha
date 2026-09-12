@@ -184,7 +184,7 @@ test_that("pacha_configure() rejects a non-positive timeout", {
 
 test_that("pacha_configure() rejects an invalid use_exclude_pattern regex", {
   local_pacha_config()
-  expect_error(pacha_configure(use_exclude_pattern = "("), "regular expression")
+  expect_error(suppressWarnings(pacha_configure(use_exclude_pattern = "(")), "regular expression")
 })
 
 test_that("pacha_configure() rejects a fetcher that is not NULL or a function", {
@@ -355,7 +355,7 @@ test_that("ColDP accessors read a well-formed local archive correctly", {
 test_that("ColDP source excludes properties matching use_exclude_pattern", {
   zip_path <- create_dummy_coldp_zip()
   local_pacha_config(source = "coldp", coldp_zip_file = zip_path,
-                    use_exclude_pattern = "habit")
+                     use_exclude_pattern = "habit")
 
   expect_output(uses <- sustainable_uses_pacha("Bidens andicola", source = "coldp"), "Medicinal")
   expect_false(grepl("shrub", uses))
@@ -481,7 +481,7 @@ test_that("reference_pacha() reports no-data when metadata.yaml has no citation"
 test_that("compare_pacha() produces a valid summary data.frame, no network", {
   zip_path <- create_dummy_coldp_zip()
   local_pacha_config(fetcher = mock_fetcher_found, coldp_zip_file = zip_path,
-                    coldp_country = "EC")
+                     coldp_country = "EC")
 
   report <- compare_pacha("Bidens andicola", component = "common_names", print = FALSE)
   expect_s3_class(report$summary, "data.frame")

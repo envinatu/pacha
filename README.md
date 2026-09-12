@@ -1,5 +1,3 @@
-<img src="man/figures/logo.png" align="right" height="139"/>
-
 <!-- badges: start -->
 
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental) [![CRAN status](https://www.r-pkg.org/badges/version/pacha)](https://CRAN.R-project.org/package=pacha) [![R-CMD-check](https://github.com/envinatu/pacha/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/envinatu/pacha/actions/workflows/R-CMD-check.yaml) [![](http://cranlogs.r-pkg.org/badges/grand-total/pacha?color=green)](https://cran.r-project.org/package=pacha) [![Codecov test coverage](https://codecov.io/gh/envinatu/pacha/graph/badge.svg)](https://app.codecov.io/gh/envinatu/pacha)
@@ -7,6 +5,8 @@
 <!-- badges: end -->
 
 # pacha
+
+<img src="man/figures/logo.png" align="right" height="139"/>
 
 `pacha` is an R package designed to query and report on taxonomic and ethnobotanical checklist data. It provides functions to query the 'Listado de plantas de uso y aprovechamiento sostenible en Ecuador' checklist ([doi:10.48580/dgvrn](https://www.google.com/search?q=doi:10.48580/dgvrn))—retrieved via ChecklistBank or a local Catalogue of Life Data Package (ColDP) archive—and generates Markdown reports for reproducible workflows. Built on the flexible ColDP schema, the package can be pointed at any ChecklistBank-compatible dataset beyond the Ecuador checklist, complete with support for extensible language dictionaries.
 

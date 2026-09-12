@@ -1,15 +1,15 @@
 Package: pacha
-Title: A Flexible Toolkit for ChecklistBank Taxonomic and Ethnobotanical Data
+Title: Reproducible Reporting for ChecklistBank Ethnobotanical Data
 Version: 0.1.0
 Authors@R: person("Marcelo F.", "Amores-Palma", role = c("aut", "cre", "cph"),
     email = "contacto.envinatu@gmail.com",
     comment = c(ORCID = "0000-0002-0337-0467"))
-Description: Provides functions to query the 'Listado de plantas de uso y
-    aprovechamiento sostenible en Ecuador' checklist, <doi:10.48580/dgvrn>,
-    and generate markdown reports for reproducible workflows. Built
-    on the Catalogue of Life Data Package schema, the package can also
-    query other ChecklistBank-compatible datasets or local ColDP
-    archives, with support for extensible language dictionaries.
+Description: Provides programmatic access to the 'Listado de plantas de
+    uso y aprovechamiento sostenible en Ecuador' <doi:10.48580/dgvrn>.
+    Acts as a client for the 'ChecklistBank' API and for processing
+    'ColDP' (Catalogue of Life Data Package) files. Supports data
+    retrieval for ethnobotanical records and includes built-in
+    Markdown report generation for reproducible workflows.
 License: GPL (>= 3)
 URL: https://github.com/envinatu/pacha
 BugReports: https://github.com/envinatu/pacha/issues
@@ -28,6 +28,5 @@ Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
 LazyData: true
-Author: Marcelo F. Amores-Palma [aut, cre, cph] (<https://orcid.org/0000-0002-0337-0467>)
 Config/roxygen2/version: 8.1.0
 VignetteBuilder: knitr
