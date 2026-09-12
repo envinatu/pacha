@@ -8,7 +8,7 @@
 
 <img src="man/figures/logo.png" align="right" height="139"/>
 
-`pacha` is an R package designed to query and report on taxonomic and ethnobotanical checklist data. It provides functions to query the 'Listado de plantas de uso y aprovechamiento sostenible en Ecuador' checklist ([doi:10.48580/dgvrn](https://www.google.com/search?q=doi:10.48580/dgvrn))—retrieved via ChecklistBank or a local Catalogue of Life Data Package (ColDP) archive—and generates Markdown reports for reproducible workflows. Built on the flexible ColDP schema, the package can be pointed at any ChecklistBank-compatible dataset beyond the Ecuador checklist, complete with support for extensible language dictionaries.
+`pacha` is an R package designed to query and report on taxonomic and ethnobotanical checklist data. It provides functions to query the 'Listado de plantas de uso y aprovechamiento sostenible en Ecuador' checklist ([doi:10.48580/dgvrn](https://doi.org/10.48580/dgvrn))—retrieved via ChecklistBank or a local Catalogue of Life Data Package (ColDP) archive—and generates Markdown reports for reproducible workflows. Built on the flexible ColDP schema, the package can be pointed at any ChecklistBank-compatible dataset beyond the Ecuador checklist, complete with support for extensible language dictionaries.
 
 
 All user-facing results default to Spanish; language dictionaries are read dynamically from `inst/lang/*.yml`, so adding a language is a matter of dropping in a new file rather than changing code — set your language with `pacha_configure()`.
