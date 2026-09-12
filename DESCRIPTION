@@ -11,6 +11,7 @@ Description: Provides programmatic access to the 'Listado de plantas de
     retrieval for ethnobotanical records and includes built-in
     Markdown report generation for reproducible workflows.
 License: GPL (>= 3)
+Language: en-US
 URL: https://github.com/envinatu/pacha
 BugReports: https://github.com/envinatu/pacha/issues
 Imports:
