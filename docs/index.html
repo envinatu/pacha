@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">pacha</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
       </span>
     </div>
 
@@ -123,12 +123,16 @@ install.packages("pacha")
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/reference_pacha.html">reference_pacha</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><code><a href="reference/pacha_configure.html">pacha_configure()</a></code> also exposes <code>language</code> (see above), <code>fetcher</code> (swap the underlying HTTP client, e.g. for testing or caching), <code>use_exclude_pattern</code> and <code>labels</code> (control which taxa/fields are filtered or how they’re labelled), <code>source</code> and <code>timeout</code> (network request timeout). See <code><a href="reference/pacha_configure.html">?pacha_configure</a></code> for the full argument reference.</p>
-<p>Contributions that generalize dataset-specific assumptions, add wrappers to the <code><a href="reference/indexation_urls_pacha.html">indexation_urls_pacha()</a></code> family for other indices, or expand <code>inst/lang/*.yml</code> with new languages are very welcome — see <a href="CONTRIBUTING.html">CONTRIBUTING.md</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="data-sources-and-attribution">Data sources and attribution<a class="anchor" aria-label="anchor" href="#data-sources-and-attribution"></a>
 </h2>
 <p>The package is a query client and does not redistribute underlying datasets. Users are responsible for complying with source licenses, terms of use, and proper citation requirements for any dataset queried through <code>pacha</code>. Results may vary or change as remote services and underlying data sources are updated.</p>
+</div>
+<div class="section level2">
+<h2 id="contributing">Contributing<a class="anchor" aria-label="anchor" href="#contributing"></a>
+</h2>
+<p>Contributions that generalize dataset-specific assumptions, add wrappers to the <code><a href="reference/indexation_urls_pacha.html">indexation_urls_pacha()</a></code> family for other indices, or expand <code>inst/lang/*.yml</code> with new languages are very welcome.</p>
 </div>
 <div class="section level2">
 <h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
