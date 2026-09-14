@@ -74,11 +74,14 @@ reference_pacha()
 
 `pacha_configure()` also exposes `language` (see above), `fetcher` (swap the underlying HTTP client, e.g. for testing or caching), `use_exclude_pattern` and `labels` (control which taxa/fields are filtered or how they're labelled), `source` and `timeout` (network request timeout). See `?pacha_configure` for the full argument reference.
 
-Contributions that generalize dataset-specific assumptions, add wrappers to the `indexation_urls_pacha()` family for other indices, or expand `inst/lang/*.yml` with new languages are very welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).
-
 ## Data sources and attribution
 
 The package is a query client and does not redistribute underlying datasets. Users are responsible for complying with source licenses, terms of use, and proper citation requirements for any dataset queried through `pacha`. Results may vary or change as remote services and underlying data sources are updated.
+
+## Contributing
+
+Contributions that generalize dataset-specific assumptions, add wrappers to the `indexation_urls_pacha()` family for other indices, or expand `inst/lang/*.yml` with new languages are very welcome.
+
 
 ## Code of Conduct
 
