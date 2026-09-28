@@ -1,0 +1,15 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^CONTRIBUTING\.md$
+^LICENSE\.md$
+^\.github$
+^CODE_OF_CONDUCT\.md$
+^codecov\.yml$
+^dev$
+^docs$
+^pkgdown$
+^\.quarto$
+^README\.html$
+^README_files$
+^_pkgdown\.yml$
+^cran-comments\.md$
