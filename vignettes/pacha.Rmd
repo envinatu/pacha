@@ -24,7 +24,6 @@ This vignette follows the same order you'd naturally learn the package in: setti
 
 ```{r setup}
 library(pacha)
-# devtools::load_all("C:/Users/PC/My Drive/R Packages/pacha")
 ```
 
 ## Two flavors of every accessor
@@ -44,11 +43,35 @@ Before looking anything up, `pacha` needs to know where to look. `pacha_configur
 pacha_configure()
 ```
 
-By default that's the ChecklistBank web API against dataset `"313479"`. To work against a different ChecklistBank dataset, change `dataset` (and `language`, if you want labels translated):
+By default that's the ChecklistBank web API against dataset `"313479"`, the Ecuador dataset. To work against a different ChecklistBank dataset, change `dataset` (and `language`, if you want labels translated):
 
 ```{r}
 pacha_configure(source = "api", dataset = "313479", language = "es")
 ```
+
+### Results depend on the configured dataset
+
+The output of `pacha`'s functions depends on the data available in the dataset you have configured. Not every ChecklistBank dataset records the same information, so the same call can return richer or poorer results depending on where it looks.
+
+For example, dataset `"9596"` includes detailed use data, so it behaves like the default dataset and detailed results are available:
+
+```{r}
+pacha_configure(dataset = "9596")
+reference_pacha()
+is_listed_pacha(species = "Munnozia hastifolia", detailed = TRUE)
+```
+
+In contrast, dataset `"278524"` does not contain specific use data, so detailed results cannot be obtained from it:
+
+```{r}
+pacha_configure(dataset = "278524")
+reference_pacha()
+is_listed_pacha("Baccharis latifolia", detailed = TRUE)
+```
+
+If a `detailed = TRUE` call returns less than you expect, check whether the configured dataset actually records that information.
+
+### Local ColDP archives
 
 `pacha` can also read data from a local ColDP archive instead of the web API — useful if you're offline, iterating on a checklist that hasn't been published yet, or simply want faster, more predictable lookups while writing. That mode is configured through `coldp_zip_file` and `coldp_country`; this vignette sticks to the web API throughout, since it doesn't require you to have a local archive on hand to follow along.
 
@@ -160,9 +183,9 @@ That's what the `_md` accessors are for. They mirror the plain-text functions on
 
 `pacha_report()` is where everything above converges. For one or more species, it combines the scientific-name heading, common names, and sustainable uses — using the same `_md` accessors described above — into a single Markdown block, ready to drop into a chapter:
 
-```{r, eval = FALSE}
+```{r echo=TRUE}
 #| results: asis
-pacha_report(c("Bidens andicola", "Bomarea multiflora"), language = "en")
+pacha_report(c("Bidens andicola", "Bomarea multiflora"), language = "es")
 ```
 
 Because each underlying `_md` function quietly returns `""` when a component has no data, a species with a thin record doesn't leave a "no data" placeholder or a heading with nothing under it — the block for that species is simply shorter. `pacha_report()` forwards `language`, `source`, `use` and `refresh` to `common_names_pacha_md()` and `sustainable_uses_pacha_md()`; the heading itself always comes from `pacha_sc_full_name_md()`, which resolves independently against ChecklistBank's Catalogue of Life dataset and isn't affected by those arguments.
@@ -175,8 +198,8 @@ This scales naturally to something like a printed flora or a Quarto book with on
 
 ```{r}
 #| label: Amaranthaceae
+#| echo: true
 #| results: asis
-#| echo: false
 pacha_report(c(
   "Alternanthera porrigens", # bledo
   "Amaranthus asplundii",    # colada morada
@@ -192,7 +215,6 @@ A few things worth calling out about this pattern:
 - **`echo: false`** hides the R code from the rendered book — readers see the species entries, not the call that produced them.
 - **`results: asis`** tells Quarto to treat `pacha_report()`'s output as Markdown to be rendered, not as text to be printed inside a code block. Without it you'd get the raw Markdown source on the page instead of headings and formatted text.
 - **`pacha_report()` accepts a vector**, so a family with several species doesn't need one call per species — a single call with all the names produces one continuous block, in order, separated by a blank line between species. That also means a failure partway through (an invalid name, for instance) stops the whole call, so it's worth keeping a quick `is_listed_pacha()` check nearby while you're still curating the list of names for a chapter.
-- Comments after each name (`# bledo`, `# colada morada`...) are just your own working notes — `pacha` never sees them. They're a convenient way to keep track of which vernacular name or field observation motivated including a species, without cluttering the rendered output.
 - Because this chunk only depends on `pacha_report()`'s Markdown output, it renders the same way regardless of the book's output format — the same chapter source produces consistent species entries whether Quarto is building HTML, LaTeX, Typst, EPUB or a Word document.
 
 If you're assembling a book this way, it's usually worth keeping one `.qmd` file per family (or per chapter, however you're splitting things), with a chunk like the one above at the top and any narrative text around it, and running `pacha_clear_cache()` once at the start of a full re-render, so every chapter picks up the latest data instead of whatever was cached from an earlier, partial render.
