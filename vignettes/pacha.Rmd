@@ -67,6 +67,7 @@ In contrast, dataset `"278524"` does not contain specific use data, so detailed 
 pacha_configure(dataset = "278524")
 reference_pacha()
 is_listed_pacha("Baccharis latifolia", detailed = TRUE)
+pacha_clear_cache()
 ```
 
 If a `detailed = TRUE` call returns less than you expect, check whether the configured dataset actually records that information.
@@ -80,6 +81,10 @@ Whatever the default, any individual call can override it with its own `source` 
 ## Resolving a name
 
 The simplest possible question you can ask `pacha` is: what is the correct, fully resolved scientific name for this species? `pacha_sc_full_name()` answers exactly that, and nothing else — no common names, no uses, just the name itself, with authorship attached when it's available:
+
+```{r}
+pacha_configure(source = "api", dataset = "313479", language = "es")
+```
 
 ```{r}
 species <- "Bidens andicola"
